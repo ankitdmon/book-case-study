@@ -4,6 +4,6 @@ const router = express.Router();
 const publishersController = require('../controllers/publishersController');
 
 
-router.get('/filter', publishersController.filterPublishers);
+router.get('/publishers/:publisherId/reviews', publishersController.getPublisherReviews);
 
 module.exports = router;

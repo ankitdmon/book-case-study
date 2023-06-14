@@ -2,8 +2,8 @@ const express = require('express');
 const router = express.Router();
 const reviewsController = require('../controllers/reviewsController');
 
-router.get('/filter', reviewsController.filterReviews);
+router.get('/reviews/average-rating', reviewsController.getAverageRating);
 
-router.get('/average-rating', reviewsController.calculateAverageRating);
+router.get('/reviews', reviewsController.getFilteredReviews);
 
 module.exports = router;

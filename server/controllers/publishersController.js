@@ -1,19 +1,22 @@
-const Publisher = require('../models/publisher');
+const Publisher = require("../models/publisher");
+const Book = require("../models/book");
+const Review = require("../models/review");
+const Language = require("../models/language");
 
-// Controller function for filtering publishers
-const filterPublishers = async (req, res) => {
+exports.getPublisherReviews = async (req, res) => {
   try {
-    // const keyword = req.query.keyword;
+    const { publisherId } = req.params;
 
-    // // Perform the filtering logic based on the keyword
-    // const filteredPublishers = await Publisher.find({ name: { $regex: keyword, $options: 'i' } });
+    // Find the publisher and their books
+    const publisher = await Publisher.findById(publisherId);
+    const books = await Book.find({ publisher: publisherId });
 
-    res.json({"rotuter": "/publisher-filter"});
+    // Find reviews of books published by the publisher in Spanish language
+    const reviews = await Review.find({ book: { $in: books }, language: 'Spanish' });
+
+    res.json(reviews);
+    // res.json({ reviews: "nncncklnc an" });
   } catch (error) {
-    res.status(500).json({ message: 'Internal Server Error' });
+    res.status(500).json({ error: "Internal server error" });
   }
-};
-
-module.exports = {
-  filterPublishers,
 };
